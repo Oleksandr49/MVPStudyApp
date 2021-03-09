@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ArchitectureStudyApp</string>
+    <string name="textview">TextView</string>
+    <string name="create">create</string>
+    <string name="Read">Read</string>
+    <string name="submit">addPosition</string>
+    <string name="ADD">ADD</string>
+</resources>
