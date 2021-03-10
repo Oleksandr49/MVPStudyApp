@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<ViewHolder> {
+
     private final List<DataObject> dataObjects = new ArrayList<>();
 
     @NonNull
@@ -26,7 +27,6 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.objectName.setText(dataObjects.get(position).getName());
-        holder.objectDetails.setText(dataObjects.get(position).getDetails());
     }
 
     @Override
@@ -35,8 +35,4 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
 
-    public void addItemToAdapter(DataObject dataObject){
-        this.dataObjects.add(dataObject);
-        notifyItemInserted(dataObjects.size() - 1);
-    }
 }

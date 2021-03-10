@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.archstud.architecturestudyapp.MainActivity;
 import com.archstud.architecturestudyapp.R;
 import com.archstud.architecturestudyapp.repository.DataObject;
 
@@ -43,13 +42,6 @@ public class ObjectCreationFragment extends Fragment implements ObjectCreationFr
             object.setName(objectNameInput.getText().toString());
             object.setDetails(objectDetailsInput.getText().toString());
             presenter.addObject(object);
-            FragmentCommander commander = (MainActivity)getActivity();
-
-            if(commander!=null){
-                commander.updateListFragment(object);
-                commander.hideFragment(this);
-            }
-
         });
         super.onViewCreated(view, savedInstanceState);
     }
@@ -59,10 +51,4 @@ public class ObjectCreationFragment extends Fragment implements ObjectCreationFr
         presenter.setView(null);
         super.onDestroy();
     }
-
-    public interface FragmentCommander {
-        void hideFragment(Fragment fragment);
-        void updateListFragment(DataObject dataObject);
-    }
-
 }

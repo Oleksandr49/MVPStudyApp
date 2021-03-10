@@ -9,7 +9,8 @@
     <EditText
         android:id="@+id/objectNameInput"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:background="@color/teal_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,8 +18,8 @@
 
     <EditText
         android:id="@+id/objectDetailsInput"
-        android:layout_width="413dp"
-        android:layout_height="284dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="196dp"
         android:background="@color/teal_700"
         app:layout_constraintEnd_toEndOf="parent"
