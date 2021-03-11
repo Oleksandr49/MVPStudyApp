@@ -3,38 +3,35 @@ package com.archstud.architecturestudyapp.fragments;
 import com.archstud.architecturestudyapp.repository.DataObject;
 import com.archstud.architecturestudyapp.repository.DataObjectRepository;
 
-import io.reactivex.CompletableObserver;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
-public class ObjectCreationFragmentPresenter {
+public class ObjectCreationFragmentPresenter implements Presenter {
 
     private View view;
-    private final DataObjectRepository repository = new DataObjectRepository();
+    private DataObjectRepository repository;
 
     public void setView(View view){
         this.view = view;
     }
 
-    public void addObject(DataObject dataObject){
-        repository.create(dataObject)
-        .subscribeOn(Schedulers.io())
-        .subscribe(new CompletableObserver() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-            }
-            @Override
-            public void onComplete() {
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
-        });
+    public void addPositionToDatabase(String name, String details){
+        DataObject dataObject = new DataObject();
+        dataObject.setName(name);
+        dataObject.setDetails(details);
+        repository.create(dataObject, this);
     }
 
-    public interface View{
+    public void addPositionToList(String positionName){
+       ObjectCreationFragment.FragmentListener listener = view.getFragmentListener();
+       listener.addPositionToList(positionName);
+       view.dismissFragment();
+    }
+
+    public void setRepository(DataObjectRepository repository) {
+        this.repository = repository;
+    }
+
+    public interface View {
+        ObjectCreationFragment.FragmentListener getFragmentListener();
+        void dismissFragment();
     }
 }

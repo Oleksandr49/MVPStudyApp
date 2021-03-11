@@ -6,22 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.archstud.architecturestudyapp.R;
-import com.archstud.architecturestudyapp.repository.DataObject;
+import com.archstud.architecturestudyapp.repository.DataObjectRepositoryImpl;
 
 public class ObjectCreationFragment extends Fragment implements ObjectCreationFragmentPresenter.View{
 
     private ObjectCreationFragmentPresenter presenter;
+    private FragmentListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new ObjectCreationFragmentPresenter();
+        presenter.setRepository(new DataObjectRepositoryImpl());
     }
 
     @Nullable
@@ -36,12 +39,9 @@ public class ObjectCreationFragment extends Fragment implements ObjectCreationFr
         EditText objectNameInput = view.findViewById(R.id.objectNameInput);
         EditText objectDetailsInput = view.findViewById(R.id.objectDetailsInput);
         Button addButton = view.findViewById(R.id.ADD);
-
-        addButton.setOnClickListener(v -> {
-            DataObject object = new DataObject();
-            object.setName(objectNameInput.getText().toString());
-            object.setDetails(objectDetailsInput.getText().toString());
-            presenter.addObject(object);
+        addButton.setOnClickListener(v ->{
+            if(!objectNameInput.getText().toString().isEmpty() & !objectDetailsInput.getText().toString().isEmpty()){
+                presenter.addPositionToDatabase(objectNameInput.getText().toString(), objectDetailsInput.getText().toString()); }
         });
         super.onViewCreated(view, savedInstanceState);
     }
@@ -50,5 +50,24 @@ public class ObjectCreationFragment extends Fragment implements ObjectCreationFr
     public void onDestroy() {
         presenter.setView(null);
         super.onDestroy();
+    }
+
+    @Override
+    public FragmentListener getFragmentListener(){
+        return this.listener;
+    }
+
+    @Override
+    public void dismissFragment() {
+        listener.removeFragment(this);
+    }
+
+    public void setListener(FragmentListener listener) {
+        this.listener = listener;
+    }
+
+    public interface FragmentListener{
+        void removeFragment(Fragment fragment);
+        void addPositionToList(String positionName);
     }
 }

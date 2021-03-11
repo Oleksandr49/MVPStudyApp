@@ -1,10 +1,11 @@
 package com.archstud.architecturestudyapp.fragments;
 
-import com.archstud.architecturestudyapp.repository.DataObjectRepository;
+import com.archstud.architecturestudyapp.repository.DataObject;
+
+import java.util.List;
 
 public class ObjectDetailsFragmentPresenter {
     private View view;
-    private final DataObjectRepository repository = new DataObjectRepository();
 
     public void setView(View view){
         this.view = view;
