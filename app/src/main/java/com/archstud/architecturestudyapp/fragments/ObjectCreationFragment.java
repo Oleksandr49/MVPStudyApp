@@ -18,6 +18,7 @@ import com.archstud.architecturestudyapp.repository.DataObjectRepositoryImpl;
 public class ObjectCreationFragment extends Fragment implements ObjectCreationFragmentPresenter.View{
 
     private ObjectCreationFragmentPresenter presenter;
+    private ListViewFragment listViewFragment;
     private FragmentListener listener;
 
     @Override
@@ -40,8 +41,10 @@ public class ObjectCreationFragment extends Fragment implements ObjectCreationFr
         EditText objectDetailsInput = view.findViewById(R.id.objectDetailsInput);
         Button addButton = view.findViewById(R.id.ADD);
         addButton.setOnClickListener(v ->{
-            if(!objectNameInput.getText().toString().isEmpty() & !objectDetailsInput.getText().toString().isEmpty()){
-                presenter.addPositionToDatabase(objectNameInput.getText().toString(), objectDetailsInput.getText().toString()); }
+            String name = objectNameInput.getText().toString();
+            String details = objectDetailsInput.getText().toString();
+            if(!name.isEmpty() & !details.isEmpty()){
+                presenter.addPositionToDatabase(name, details); }
         });
         super.onViewCreated(view, savedInstanceState);
     }
@@ -49,16 +52,14 @@ public class ObjectCreationFragment extends Fragment implements ObjectCreationFr
     @Override
     public void onDestroy() {
         presenter.setView(null);
+        listViewFragment = null;
+        listener = null;
         super.onDestroy();
     }
 
     @Override
-    public FragmentListener getFragmentListener(){
-        return this.listener;
-    }
-
-    @Override
-    public void dismissFragment() {
+    public void addPositionToAdapter(Long dataObjectId) {
+        listViewFragment.addPosition(dataObjectId);
         listener.removeFragment(this);
     }
 
@@ -66,8 +67,11 @@ public class ObjectCreationFragment extends Fragment implements ObjectCreationFr
         this.listener = listener;
     }
 
+    public void setListViewFragment(ListViewFragment listViewFragment) {
+        this.listViewFragment = listViewFragment;
+    }
+
     public interface FragmentListener{
         void removeFragment(Fragment fragment);
-        void addPositionToList(String positionName);
     }
 }

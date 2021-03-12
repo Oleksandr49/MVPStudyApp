@@ -3,26 +3,19 @@ package com.archstud.architecturestudyapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.archstud.architecturestudyapp.fragments.ListPresenter;
-import com.archstud.architecturestudyapp.fragments.Presenter;
 import com.archstud.architecturestudyapp.repository.DataObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<ViewHolder> implements RecyclerViewAdapter {
 
-    private final Presenter presenter;
     private final List<DataObject> dataObjects = new ArrayList<>();
-
-    public Adapter(Presenter presenter){
-        this.presenter = presenter;
-    }
+    private PresenterListener presenterListener;
 
     @NonNull
     @Override
@@ -35,23 +28,7 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.objectName.setText(dataObjects.get(position).getName());
-       // holder.objectName.setOnClickListener(v -> ((ListPresenter)presenter).showDetails(holder.objectName.toString()));
-
-        holder.removeButton.setOnClickListener(v -> {
-            ((ListPresenter)presenter).showConfirmationDialog(holder.getAdapterPosition());
-        });
-    }
-
-    public void addItem(DataObject dataObject){
-        this.dataObjects.add(dataObject);
-        notifyItemInserted(dataObjects.size()-1);
-    }
-
-    public void removePosition(int position){
-        DataObject objectToRemove = dataObjects.get(position);
-        dataObjects.remove(position);
-        notifyItemRemoved(position);
-        ((ListPresenter)presenter).removePositionFromDatabase(objectToRemove.getName());
+        holder.removeButton.setOnClickListener(v -> presenterListener.showRemovalConfirmationDialog(holder.getAdapterPosition()));
     }
 
     @Override
@@ -59,9 +36,26 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder> {
         return dataObjects.size();
     }
 
-    public void initListItems(List<DataObject> dataObjects){
-        this.dataObjects.addAll(dataObjects);
+    @Override
+    public void addListOfItemsToAdapter(List<DataObject> items) {
+        this.dataObjects.addAll(items);
         notifyItemRangeInserted(0, dataObjects.size());
     }
 
+    @Override
+    public void addItemToAdapter(DataObject dataObject) {
+        this.dataObjects.add(dataObject);
+        notifyItemInserted(dataObjects.size()-1);
+    }
+
+    @Override
+    public void removeItemFromAdapter(int position) {
+        presenterListener.deleteObjectFromDatabase(dataObjects.get(position).getId());
+        dataObjects.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void setPresenterListener(PresenterListener presenterListener) {
+        this.presenterListener = presenterListener;
+    }
 }

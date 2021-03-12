@@ -20,11 +20,14 @@ public interface DataObjectDAO {
     Completable delete(DataObject dataObject);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertOrUpdateUser(DataObject dataObject);
+    Single<Long> insertOrUpdateUser(DataObject dataObject);
 
-    @Query("SELECT * FROM DataObjects WHERE name = :dataObjectName")
-    Maybe<DataObject> read(String dataObjectName);
+    @Query("SELECT * FROM DataObjects WHERE id = :dataObjectId")
+    Maybe<DataObject> read(Long dataObjectId);
 
     @Query("SELECT * FROM DataObjects")
     Single<List<DataObject>> readAll();
+
+    @Query("DELETE FROM DataObjects WHERE id = :dataObjectId")
+    Completable deleteById(Long dataObjectId);
 }

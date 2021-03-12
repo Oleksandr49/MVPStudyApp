@@ -2,12 +2,13 @@ package com.archstud.architecturestudyapp.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,16 +18,14 @@ import com.archstud.architecturestudyapp.R;
 import com.archstud.architecturestudyapp.repository.DataObjectRepositoryImpl;
 
 
-public class ListFragment extends Fragment implements ListPresenter.View {
+public class ListFragment extends Fragment implements com.archstud.architecturestudyapp.fragments.View, ListViewFragment {
 
-    private ListPresenter presenter;
-    private RecyclerView recyclerView;
-
+    private ListFragmentPresenter presenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new ListPresenter();
+        presenter = new ListFragmentPresenter();
         presenter.setRepository(new DataObjectRepositoryImpl());
     }
 
@@ -40,9 +39,12 @@ public class ListFragment extends Fragment implements ListPresenter.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setAdapter(new Adapter(presenter));
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        Adapter adapter = new Adapter();
+        adapter.setPresenterListener(presenter);
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        presenter.setAdapterListener(adapter);
         presenter.initListItems();
     }
 
@@ -52,17 +54,17 @@ public class ListFragment extends Fragment implements ListPresenter.View {
         super.onDestroy();
     }
 
-    public void showDialog(int position){
-        ConfirmationDialog dialog = new ConfirmationDialog(presenter, position);
-        dialog.show(getFragmentManager(), "anyTag");
+    @Override
+    public void showToast(String text) {
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showDialog(DialogFragment dialog){
+        if(getFragmentManager() != null) dialog.show(getFragmentManager(), "anyTag");
     }
 
     @Override
-    public Adapter getViewAdapter() {
-        return (Adapter) recyclerView.getAdapter();
-    }
-
-    public Presenter getPresenter(){
-        return this.presenter;
+    public void addPosition(Long dataObjectId) {
+        presenter.addPositionToAdapter(dataObjectId);
     }
 }

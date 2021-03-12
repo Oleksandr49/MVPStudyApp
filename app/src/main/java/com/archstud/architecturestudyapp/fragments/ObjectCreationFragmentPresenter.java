@@ -1,10 +1,17 @@
 package com.archstud.architecturestudyapp.fragments;
 
+import com.archstud.architecturestudyapp.myObservers.MyCompletableObserver;
 import com.archstud.architecturestudyapp.repository.DataObject;
 import com.archstud.architecturestudyapp.repository.DataObjectRepository;
 
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class ObjectCreationFragmentPresenter implements Presenter {
+
+public class ObjectCreationFragmentPresenter extends DataObjectPresenter {
 
     private View view;
     private DataObjectRepository repository;
@@ -17,13 +24,26 @@ public class ObjectCreationFragmentPresenter implements Presenter {
         DataObject dataObject = new DataObject();
         dataObject.setName(name);
         dataObject.setDetails(details);
-        repository.create(dataObject, this);
-    }
 
-    public void addPositionToList(String positionName){
-       ObjectCreationFragment.FragmentListener listener = view.getFragmentListener();
-       listener.addPositionToList(positionName);
-       view.dismissFragment();
+        repository.create(dataObject)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new SingleObserver<Long>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(@NonNull Long aLong) {
+                view.addPositionToAdapter(aLong);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+        });
     }
 
     public void setRepository(DataObjectRepository repository) {
@@ -31,7 +51,8 @@ public class ObjectCreationFragmentPresenter implements Presenter {
     }
 
     public interface View {
-        ObjectCreationFragment.FragmentListener getFragmentListener();
-        void dismissFragment();
+        void addPositionToAdapter(Long dataObjectId);
     }
+
+
 }
