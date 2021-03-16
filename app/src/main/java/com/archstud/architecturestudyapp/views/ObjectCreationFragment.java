@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.archstud.architecturestudyapp.R;
 import com.archstud.architecturestudyapp.model.repository.DataObjectRepository;
@@ -69,5 +70,13 @@ public class ObjectCreationFragment extends Fragment implements BaseView {
     @Override
     public void dismissView() {
         getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void showFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentPlaceHolder, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

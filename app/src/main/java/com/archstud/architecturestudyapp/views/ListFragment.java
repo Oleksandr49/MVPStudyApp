@@ -83,6 +83,14 @@ public class ListFragment extends Fragment implements BaseView {
     }
 
     @Override
+    public void showFragment(Fragment fragment) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentPlaceHolder, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
     public void dismissView() {
         getActivity().getSupportFragmentManager().popBackStack();
     }

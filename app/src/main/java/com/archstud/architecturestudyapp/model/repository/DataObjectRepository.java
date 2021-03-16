@@ -25,7 +25,7 @@ public class DataObjectRepository implements BaseRepository<DataObject> {
     }
 
     @Override
-    public Maybe<DataObject> read(Long dataObjectId) {
+    public Single<DataObject> read(Long dataObjectId) {
         return database.dataObjectDAO().read(dataObjectId);
     }
 

@@ -8,11 +8,11 @@ import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
-public class OnSuccessSingleListObserver implements SingleObserver<List<DataObject>> {
+public class OnSuccessSingleDataObjectListObserver implements SingleObserver<List<DataObject>> {
 
     private final OnSuccessActionCallback<List<DataObject>> callback;
 
-    public OnSuccessSingleListObserver (OnSuccessActionCallback<List<DataObject>> callback){
+    public OnSuccessSingleDataObjectListObserver(OnSuccessActionCallback<List<DataObject>> callback){
         this.callback = callback;
     }
 

@@ -25,7 +25,7 @@ public interface DataObjectDAO {
     Completable insertOrUpdateUser(DataObject dataObject);
 
     @Query("SELECT * FROM DataObjects WHERE id = :dataObjectId")
-    Maybe<DataObject> read(Long dataObjectId);
+    Single<DataObject> read(Long dataObjectId);
 
     @Query("SELECT * FROM DataObjects")
     Single<List<DataObject>> readAll();

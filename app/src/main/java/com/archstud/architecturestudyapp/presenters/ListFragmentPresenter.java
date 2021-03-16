@@ -1,12 +1,15 @@
 package com.archstud.architecturestudyapp.presenters;
 
+import androidx.fragment.app.Fragment;
+
 import com.archstud.architecturestudyapp.model.observers.OnCompleteObserver;
 import com.archstud.architecturestudyapp.views.ObjectDetailsFragment;
 import com.archstud.architecturestudyapp.views.dialogs.ConfirmationDialogCallback;
 import com.archstud.architecturestudyapp.views.dialogs.ConfirmationDialog;
 import com.archstud.architecturestudyapp.model.domainModels.DataObject;
-import com.archstud.architecturestudyapp.model.observers.OnSuccessSingleListObserver;
+import com.archstud.architecturestudyapp.model.observers.OnSuccessSingleDataObjectListObserver;
 import com.archstud.architecturestudyapp.views.interfaces.AdapterListener;
+import com.archstud.architecturestudyapp.views.interfaces.ObjectDisplay;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -34,10 +37,13 @@ public class ListFragmentPresenter extends BasePresenter<DataObject> implements 
     public void updateAdapter(){
         repository.readAll().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new OnSuccessSingleListObserver(objects -> adapterListener.updateAdapter(objects)));
+                .subscribe(new OnSuccessSingleDataObjectListObserver(objects -> adapterListener.updateAdapter(objects)));
     }
 
     @Override
-    public void showDetails() {
+    public void showDetails(Long objectId) {
+        ObjectDisplay display = new ObjectDetailsFragment();
+        display.setAssociatedObjectId(objectId);
+        baseView.showFragment((Fragment)display);
     }
 }
