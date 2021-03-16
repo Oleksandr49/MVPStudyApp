@@ -1,12 +1,11 @@
-package com.archstud.architecturestudyapp.views;
+package com.archstud.architecturestudyapp.views.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,47 +15,48 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.archstud.architecturestudyapp.R;
 import com.archstud.architecturestudyapp.model.repository.DataObjectRepository;
-import com.archstud.architecturestudyapp.presenters.ObjectDetailsFragmentPresenter;
+import com.archstud.architecturestudyapp.presenters.ObjectEditionFragmentPresenter;
 import com.archstud.architecturestudyapp.views.interfaces.BaseView;
-import com.archstud.architecturestudyapp.views.interfaces.DataObjectDisplay;
 
-public class ObjectDetailsFragment extends Fragment implements BaseView, DataObjectDisplay {
+public class ObjectEditionFragment extends Fragment implements BaseView {
 
-    private TextView name;
-    private TextView details;
-    private ObjectDetailsFragmentPresenter presenter;
+    private ObjectEditionFragmentPresenter presenter;
     private Long associatedObjectId;
+    private EditText editName;
+    private EditText editDetails;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new ObjectDetailsFragmentPresenter();
-        presenter.setDataObjectDisplay(this);
-        presenter.setAssociatedObjectId(associatedObjectId);
+        presenter = new ObjectEditionFragmentPresenter();
         presenter.setRepository(new DataObjectRepository());
+        presenter.setAssociatedObjectId(associatedObjectId);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         presenter.setView(this);
-        return inflater.inflate(R.layout.object_details_fragment, container, false);
+        return inflater.inflate(R.layout.object_edition_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button updateButton = view.findViewById(R.id.updateButton);
-        Button closeButton = view.findViewById(R.id.closeButton);
-        closeButton.setOnClickListener(v -> presenter.dismissFragment());
-        this.name = view.findViewById(R.id.name);
-        this.details = view.findViewById(R.id.details);
-
+        Button confirmButton = view.findViewById(R.id.Confirm);
+        Button cancelButton = view.findViewById(R.id.Cancel);
+        editName = view.findViewById(R.id.objectNameEdit);
+        editDetails = view.findViewById(R.id.objectDetailsEdit);
+        confirmButton.setOnClickListener(v -> {
+            String name = editName.getText().toString();
+            String details = editDetails.getText().toString();
+            presenter.update(name, details);
+        });
+        cancelButton.setOnClickListener(v -> dismissView());
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public void onResume() {
-        presenter.initData();
         super.onResume();
     }
 
@@ -66,10 +66,6 @@ public class ObjectDetailsFragment extends Fragment implements BaseView, DataObj
         super.onDestroy();
     }
 
-    @Override
-    public void showToast(String text) {
-
-    }
 
     @Override
     public void showDialog(DialogFragment dialog) {
@@ -89,17 +85,6 @@ public class ObjectDetailsFragment extends Fragment implements BaseView, DataObj
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
-    @Override
-    public void setName(String name) {
-        this.name.setText(name);
-    }
-
-    @Override
-    public void setDetails(String details) {
-        this.details.setText(details);
-    }
-
-    @Override
     public void setAssociatedObjectId(Long associatedObjectId) {
         this.associatedObjectId = associatedObjectId;
     }

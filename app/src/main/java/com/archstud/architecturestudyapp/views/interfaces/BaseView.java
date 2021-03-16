@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 
 
 public interface BaseView {
-    void showToast(String text);
     void showDialog(DialogFragment dialog);
     void showFragment(Fragment fragment);
     void dismissView();

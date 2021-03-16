@@ -1,4 +1,4 @@
-package com.archstud.architecturestudyapp.views;
+package com.archstud.architecturestudyapp.views.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -57,10 +57,6 @@ public class ObjectCreationFragment extends Fragment implements BaseView {
         super.onDestroy();
     }
 
-    @Override
-    public void showToast(String text) {
-
-    }
 
     @Override
     public void showDialog(DialogFragment dialog) {

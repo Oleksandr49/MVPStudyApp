@@ -3,7 +3,7 @@ package com.archstud.architecturestudyapp.presenters;
 import androidx.fragment.app.Fragment;
 
 import com.archstud.architecturestudyapp.model.observers.OnCompleteObserver;
-import com.archstud.architecturestudyapp.views.ObjectDetailsFragment;
+import com.archstud.architecturestudyapp.views.fragments.ObjectDetailsFragment;
 import com.archstud.architecturestudyapp.views.dialogs.ConfirmationDialogCallback;
 import com.archstud.architecturestudyapp.views.dialogs.ConfirmationDialog;
 import com.archstud.architecturestudyapp.model.domainModels.DataObject;

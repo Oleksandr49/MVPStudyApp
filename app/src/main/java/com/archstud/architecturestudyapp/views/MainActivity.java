@@ -1,14 +1,13 @@
 package com.archstud.architecturestudyapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
 import android.os.Bundle;
 
 import com.archstud.architecturestudyapp.R;
-import com.archstud.architecturestudyapp.views.interfaces.BaseView;
+import com.archstud.architecturestudyapp.views.fragments.ObjectListFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentTransaction listFragmentInit = getSupportFragmentManager().beginTransaction();
-        listFragmentInit.replace(R.id.fragmentPlaceHolder, new ListFragment());
+        listFragmentInit.replace(R.id.fragmentPlaceHolder, new ObjectListFragment());
         listFragmentInit.addToBackStack("listFragment");
         listFragmentInit.commit();
     }

@@ -1,4 +1,4 @@
-package com.archstud.architecturestudyapp.views;
+package com.archstud.architecturestudyapp.views.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +22,7 @@ import com.archstud.architecturestudyapp.views.interfaces.BaseView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-public class ListFragment extends Fragment implements BaseView {
+public class ObjectListFragment extends Fragment implements BaseView {
 
     private ListFragmentPresenter presenter;
 
@@ -70,11 +70,6 @@ public class ListFragment extends Fragment implements BaseView {
     public void onDestroy() {
         presenter.setView(null);
         super.onDestroy();
-    }
-
-    @Override
-    public void showToast(String text) {
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
