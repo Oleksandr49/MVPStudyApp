@@ -17,7 +17,7 @@ public class ObjectCreationFragmentPresenter extends BasePresenter<DataObject> {
             repository.create(dataObject)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new OnCompleteObserver(() -> baseView.dismissView()));
+                    .subscribe(new OnCompleteObserver(() -> baseView.dismissFragment()));
         }
     }
 

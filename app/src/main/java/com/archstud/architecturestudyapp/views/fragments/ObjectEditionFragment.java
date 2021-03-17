@@ -10,15 +10,14 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.archstud.architecturestudyapp.R;
 import com.archstud.architecturestudyapp.model.repository.DataObjectRepository;
 import com.archstud.architecturestudyapp.presenters.ObjectEditionFragmentPresenter;
 import com.archstud.architecturestudyapp.views.interfaces.BaseView;
+import com.archstud.architecturestudyapp.views.interfaces.DataObjectDisplay;
 
-public class ObjectEditionFragment extends Fragment implements BaseView {
+public class ObjectEditionFragment extends BaseFragment implements BaseView, DataObjectDisplay {
 
     private ObjectEditionFragmentPresenter presenter;
     private Long associatedObjectId;
@@ -51,12 +50,13 @@ public class ObjectEditionFragment extends Fragment implements BaseView {
             String details = editDetails.getText().toString();
             presenter.update(name, details);
         });
-        cancelButton.setOnClickListener(v -> dismissView());
+        cancelButton.setOnClickListener(v -> dismissFragment());
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public void onResume() {
+        presenter.initEditionFields();
         super.onResume();
     }
 
@@ -66,26 +66,17 @@ public class ObjectEditionFragment extends Fragment implements BaseView {
         super.onDestroy();
     }
 
-
-    @Override
-    public void showDialog(DialogFragment dialog) {
-
-    }
-
-    @Override
-    public void showFragment(Fragment fragment) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentPlaceHolder, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    @Override
-    public void dismissView() {
-        getActivity().getSupportFragmentManager().popBackStack();
-    }
-
     public void setAssociatedObjectId(Long associatedObjectId) {
         this.associatedObjectId = associatedObjectId;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.editName.setText(name);
+    }
+
+    @Override
+    public void setDetails(String details) {
+        this.editDetails.setText(details);
     }
 }

@@ -37,6 +37,7 @@ public class DataObjectDiffUtilCallbackImpl extends DiffUtil.Callback {
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         DataObject oldItem = oldList.get(oldItemPosition);
         DataObject newItem = newList.get(newItemPosition);
-        return (oldItem.getName().equals(newItem.getName()) && oldItem.getDetails().equals(newItem.getDetails()));
+        return (oldItem.getName().equals(newItem.getName()) && oldItem.getDetails().equals(newItem.getDetails()) &&
+                (oldItem.getId().equals(newItem.getId())));
     }
 }

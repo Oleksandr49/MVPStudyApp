@@ -18,7 +18,9 @@ import com.archstud.architecturestudyapp.model.repository.DataObjectRepository;
 import com.archstud.architecturestudyapp.presenters.ObjectCreationFragmentPresenter;
 import com.archstud.architecturestudyapp.views.interfaces.BaseView;
 
-public class ObjectCreationFragment extends Fragment implements BaseView {
+import java.util.Objects;
+
+public class ObjectCreationFragment extends BaseFragment implements BaseView {
 
     private ObjectCreationFragmentPresenter presenter;
 
@@ -55,24 +57,5 @@ public class ObjectCreationFragment extends Fragment implements BaseView {
     public void onDestroy() {
         presenter.setView(null);
         super.onDestroy();
-    }
-
-
-    @Override
-    public void showDialog(DialogFragment dialog) {
-
-    }
-
-    @Override
-    public void dismissView() {
-        getActivity().getSupportFragmentManager().popBackStack();
-    }
-
-    @Override
-    public void showFragment(Fragment fragment) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentPlaceHolder, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }

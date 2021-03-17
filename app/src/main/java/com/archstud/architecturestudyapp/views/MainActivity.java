@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction listFragmentInit = getSupportFragmentManager().beginTransaction();
         listFragmentInit.replace(R.id.fragmentPlaceHolder, new ObjectListFragment());
-        listFragmentInit.addToBackStack("listFragment");
         listFragmentInit.commit();
     }
 }

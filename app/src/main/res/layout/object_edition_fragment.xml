@@ -2,17 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/objectNameEdit"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="70dp"
-        android:background="@color/teal_200"
+        android:layout_height="70dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="15dp"
+        android:background="@android:color/holo_orange_light"
         android:inputType="text"
-        android:hint="@string/editName"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,33 +23,38 @@
     <EditText
         android:id="@+id/objectDetailsEdit"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="50dp"
-        android:background="@color/teal_700"
+        android:layout_height="300dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:background="@android:color/holo_orange_light"
+        android:gravity="start"
         android:inputType="text"
-        android:hint="@string/editDetails"
+        android:textAlignment="gravity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/objectNameEdit" />
 
     <Button
         android:id="@+id/Confirm"
-        android:layout_width="143dp"
-        android:layout_height="107dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="90dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="50dp"
         android:text="@string/Confirm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/objectDetailsEdit" />
 
     <Button
         android:id="@+id/Cancel"
-        android:layout_width="143dp"
-        android:layout_height="107dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="90dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="75dp"
         android:text="@string/Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:backgroundTint="@android:color/holo_red_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/objectDetailsEdit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

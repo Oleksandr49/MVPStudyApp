@@ -13,6 +13,7 @@ public class ObjectDetailsFragmentPresenter extends BasePresenter<DataObject> {
     private DataObjectDisplay dataObjectDisplay;
 
     public void initData(){
+        setDataObjectDisplay((DataObjectDisplay) baseView);
         repository.read(associatedObjectId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -27,10 +28,10 @@ public class ObjectDetailsFragmentPresenter extends BasePresenter<DataObject> {
     }
 
     public void dismissFragment(){
-        baseView.dismissView();
+        baseView.dismissFragment();
     }
 
-    public void setDataObjectDisplay(DataObjectDisplay dataObjectDisplay) {
+    private void setDataObjectDisplay(DataObjectDisplay dataObjectDisplay) {
         this.dataObjectDisplay = dataObjectDisplay;
     }
 }

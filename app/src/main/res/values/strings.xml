@@ -3,16 +3,17 @@
     <string name="position_name">Position name</string>
     <string name="create">create</string>
     <string name="Read">Read</string>
-    <string name="submit">addPosition</string>
+    <string name="submit">+</string>
     <string name="ADD">ADD</string>
     <string name="position_name_input">Position Name Input</string>
     <string name="position_details_input">Position Details Input</string>
     <string name="object_name">Name</string>
     <string name="editButton">Edit</string>
-    <string name="closeButton">X</string>
+    <string name="closeButton">Close</string>
     <string name="object_details">Details</string>
     <string name="Confirm">Confirm</string>
     <string name="Cancel">Cancel</string>
     <string name="editDetails">EditDetails</string>
     <string name="editName">EditName</string>
+    <string name="x">X</string>
 </resources>

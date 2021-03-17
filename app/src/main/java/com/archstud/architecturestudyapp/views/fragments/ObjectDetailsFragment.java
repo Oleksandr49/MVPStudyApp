@@ -20,7 +20,9 @@ import com.archstud.architecturestudyapp.presenters.ObjectDetailsFragmentPresent
 import com.archstud.architecturestudyapp.views.interfaces.BaseView;
 import com.archstud.architecturestudyapp.views.interfaces.DataObjectDisplay;
 
-public class ObjectDetailsFragment extends Fragment implements BaseView, DataObjectDisplay {
+import java.util.Objects;
+
+public class ObjectDetailsFragment extends BaseFragment implements BaseView, DataObjectDisplay {
 
     private TextView name;
     private TextView details;
@@ -31,7 +33,6 @@ public class ObjectDetailsFragment extends Fragment implements BaseView, DataObj
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new ObjectDetailsFragmentPresenter();
-        presenter.setDataObjectDisplay(this);
         presenter.setAssociatedObjectId(associatedObjectId);
         presenter.setRepository(new DataObjectRepository());
     }
@@ -69,24 +70,6 @@ public class ObjectDetailsFragment extends Fragment implements BaseView, DataObj
     public void onDestroy() {
         presenter.setView(null);
         super.onDestroy();
-    }
-
-    @Override
-    public void showDialog(DialogFragment dialog) {
-
-    }
-
-    @Override
-    public void showFragment(Fragment fragment) {
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentPlaceHolder, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    @Override
-    public void dismissView() {
-        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
