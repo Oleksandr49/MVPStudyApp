@@ -1,4 +1,4 @@
-package com.archstud.architecturestudyapp.views;
+package com.archstud.architecturestudyapp.views.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,22 +12,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.archstud.architecturestudyapp.R;
 import com.archstud.architecturestudyapp.model.repository.DataObjectRepository;
 import com.archstud.architecturestudyapp.presenters.ObjectDetailsFragmentPresenter;
 import com.archstud.architecturestudyapp.views.interfaces.BaseView;
+import com.archstud.architecturestudyapp.views.interfaces.DataObjectDisplay;
 
-public class ObjectDetailsFragment extends Fragment implements BaseView {
+import java.util.Objects;
+
+public class ObjectDetailsFragment extends BaseFragment implements BaseView, DataObjectDisplay {
 
     private TextView name;
     private TextView details;
     private ObjectDetailsFragmentPresenter presenter;
+    private Long associatedObjectId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new ObjectDetailsFragmentPresenter();
+        presenter.setAssociatedObjectId(associatedObjectId);
         presenter.setRepository(new DataObjectRepository());
     }
 
@@ -40,12 +46,24 @@ public class ObjectDetailsFragment extends Fragment implements BaseView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button updateButton = view.findViewById(R.id.updateButton);
+        Button editButton = view.findViewById(R.id.editButton);
+        editButton.setOnClickListener(v -> {
+            ObjectEditionFragment objectEditionFragment = new ObjectEditionFragment();
+            objectEditionFragment.setAssociatedObjectId(associatedObjectId);
+            showFragment(objectEditionFragment);
+        });
         Button closeButton = view.findViewById(R.id.closeButton);
         closeButton.setOnClickListener(v -> presenter.dismissFragment());
-        name = view.findViewById(R.id.objectName);
-        details = view.findViewById(R.id.details);
+        this.name = view.findViewById(R.id.name);
+        this.details = view.findViewById(R.id.details);
+
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        presenter.initData();
+        super.onResume();
     }
 
     @Override
@@ -55,25 +73,17 @@ public class ObjectDetailsFragment extends Fragment implements BaseView {
     }
 
     @Override
-    public void showToast(String text) {
-
-    }
-
-    @Override
-    public void showDialog(DialogFragment dialog) {
-
-    }
-
-    @Override
-    public void dismissView() {
-        getActivity().getSupportFragmentManager().popBackStack();
-    }
-
     public void setName(String name) {
         this.name.setText(name);
     }
 
+    @Override
     public void setDetails(String details) {
         this.details.setText(details);
+    }
+
+    @Override
+    public void setAssociatedObjectId(Long associatedObjectId) {
+        this.associatedObjectId = associatedObjectId;
     }
 }

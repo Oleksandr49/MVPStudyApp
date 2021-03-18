@@ -1,5 +1,6 @@
-package com.archstud.architecturestudyapp.views;
+package com.archstud.architecturestudyapp.views.fragments;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,10 @@ import com.archstud.architecturestudyapp.views.adapters.ListFragmentAdapter;
 import com.archstud.architecturestudyapp.views.interfaces.BaseView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Objects;
 
-public class ListFragment extends Fragment implements BaseView {
+
+public class ObjectListFragment extends BaseFragment implements BaseView {
 
     private ListFragmentPresenter presenter;
 
@@ -49,11 +52,22 @@ public class ListFragment extends Fragment implements BaseView {
         listFragmentAdapter.setPresenterListener(presenter);
         recyclerView.setAdapter(listFragmentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.left = 10;
+                outRect.right = 10;
+                outRect.bottom = 15;
+                outRect.top = 15;
+            }
+        });
         presenter.setAdapterListener(listFragmentAdapter);
 
         FloatingActionButton addPosition = view.findViewById(R.id.fab);
         addPosition.setOnClickListener(v -> {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentPlaceHolder, new ObjectCreationFragment());
             transaction.addToBackStack("ObjectCreation");
             transaction.commit();
@@ -70,20 +84,5 @@ public class ListFragment extends Fragment implements BaseView {
     public void onDestroy() {
         presenter.setView(null);
         super.onDestroy();
-    }
-
-    @Override
-    public void showToast(String text) {
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showDialog(DialogFragment dialog){
-        if(getFragmentManager() != null) dialog.show(getFragmentManager(), "anyTag");
-    }
-
-    @Override
-    public void dismissView() {
-        getActivity().getSupportFragmentManager().popBackStack();
     }
 }

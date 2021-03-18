@@ -11,9 +11,9 @@ import io.reactivex.Single;
 public interface BaseRepository <T> {
 
     Single<List<T>> readAll();
-    Completable create(T dataObject);
-    Maybe<DataObject> read(Long dataObjectId);
-    Completable update (T dataObject);
-    Completable delete(T dataObject);
-    Completable deleteById(Long dataObjectId);
+    Completable create(T object);
+    Single<DataObject> read(Long objectId);
+    Completable update (T object);
+    Completable delete(T object);
+    Completable deleteById(Long objectId);
 }

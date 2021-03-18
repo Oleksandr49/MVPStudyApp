@@ -7,5 +7,5 @@ public interface ListFragmentPresenterListener<T> {
 
      void showRemovalConfirmationDialog(ConfirmationDialogCallback callback);
      void deleteObjectFromDatabase(Long id);
-     void showDetails();
+     void showDetails(Long id);
 }

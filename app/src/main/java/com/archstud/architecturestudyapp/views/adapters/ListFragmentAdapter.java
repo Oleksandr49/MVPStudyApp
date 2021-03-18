@@ -34,7 +34,10 @@ public class ListFragmentAdapter extends RecyclerView.Adapter<ViewHolder> implem
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.objectName.setText(dataObjects.get(position).getName());
-        holder.objectName.setOnClickListener(v -> presenterListener.showDetails());
+
+        holder.objectName.setOnClickListener(v ->
+                presenterListener.showDetails(dataObjects.get(holder.getAdapterPosition()).getId()));
+
         holder.removeButton.setOnClickListener(v ->
                 presenterListener.showRemovalConfirmationDialog(() ->
                         presenterListener.deleteObjectFromDatabase(dataObjects.get(holder.getAdapterPosition()).getId())));

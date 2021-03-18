@@ -20,4 +20,5 @@ public abstract class BasePresenter <T> {
         this.repository = repository;
     }
 
+
 }
