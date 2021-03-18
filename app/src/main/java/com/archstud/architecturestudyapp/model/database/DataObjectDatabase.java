@@ -1,10 +1,11 @@
-package com.archstud.architecturestudyapp.repository;
+package com.archstud.architecturestudyapp.model.database;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.archstud.architecturestudyapp.MyApplication;
+import com.archstud.architecturestudyapp.model.domainModels.DataObject;
 
 @Database(entities = DataObject.class, exportSchema = false, version = 1)
 public abstract class DataObjectDatabase extends RoomDatabase {

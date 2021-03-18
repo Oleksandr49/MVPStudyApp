@@ -1,7 +1,8 @@
-package com.archstud.architecturestudyapp.repository;
+package com.archstud.architecturestudyapp.model.domainModels;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "DataObjects")
@@ -13,6 +14,16 @@ public class DataObject {
     private String name;
     @ColumnInfo(name = "Details")
     private String details;
+
+    public DataObject(){
+
+    }
+
+    @Ignore
+    public DataObject(String name, String details){
+        this.name = name;
+        this.details = details;
+    }
 
     public Long getId() {
         return id;
